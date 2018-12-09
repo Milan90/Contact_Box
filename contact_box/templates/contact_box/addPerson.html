@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add room</title>
+</head>
+<body>
+    <form method="post">
+        <input type="text" name="name" placeholder="Imię">
+        <input type="text" name="surname" placeholder="Nazwisko">
+        <input type="text" name="description" placeholder="Opis">
+        <button type="submit">Dodaj</button>
+        {% csrf_token %}
+    </form>
+</body>
+</html>

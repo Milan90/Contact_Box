@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Person</title>
+</head>
+<body>
+    <p>Jesteś pewnien(a), że chcesz usunać {{ person.name }}
+        {{ person.surname }} z grona znajomych!?</p>
+    <form method="post">
+        <button type="submit" name="decision" value="yes"
+                onClick="alert('To spowoduje usunięcie kontaktu!')">Tak</button>
+        <button type="submit" name="decision" value="no">Nie</button>
+        {% csrf_token %}
+    </form>
+</body>
+</html>

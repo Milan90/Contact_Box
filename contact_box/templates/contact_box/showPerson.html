@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>showPerson</title>
+</head>
+<body>
+    <ul>
+        <li>{{ person.name }} {{ person.surname }}</li>
+        <li>{{ person.description }}</li>
+        <li>{{ person.address.city }}</li>
+        <li>{{ person.address.street }} {{ person.address.building_number }} {{ person.address.flat_number }}</li>
+        {% for email in person.email_set.all %}
+        <li>{{ email.email_address }} {{ email.get_type_display }}</li>
+        {% endfor %}
+        {% for phone in person.phone_set.all %}
+        <li>{{ phone.phone_number }} {{phone.get_type_display}}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

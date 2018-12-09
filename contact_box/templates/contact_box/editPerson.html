@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>edit Person</title>
+</head>
+<body>
+<h4>Dane osobowe:</h4>
+<form method="post">
+    <div>
+        <label>Imię:<input type="text" name="name" value="{{ person.name }}"></label>
+        <label>Nazwisko:<input type="text" name="surname" value="{{ person.surname }}"></label>
+        <label>Opis:<input type="text" name="description" value="{{ person.description }}"></label><br>
+        <input type="submit" value="Zapisz zmiany">
+    </div>
+    {% csrf_token %}
+</form>
+<h4>Adres</h4>
+{% if person.address %}
+    <form action="/{{ person.id }}/addAddress">
+        <div>
+            <label>Miasto:<input type="text" name="city" value="{{ person.address.city }}"></label>
+            <label>Ulica:<input type="text" name="street" value="{{ person.address.street }}"></label>
+            <label>Nr domu:<input type="number" min="1" name="house_number"
+                                  value="{{ person.address.building_number }}"></label>
+            <label>Nr mieszkania:<input type="number" min="1" name="apartment_number"
+                                        value="{{ person.address.flat_number }}"></label><br>
+            <label>
+                <button type="submit" formmethod="get">Usuń adres</button>
+            </label>
+        </div>
+        {% csrf_token %}
+    </form>
+{% else %}
+    <form method="post" action="/{{ person.id }}/addAddress">
+        <div><label>Miasto:<input type="text" name="city"></label></div>
+        <div><label>Ulica:<input type="text" name="street"></label></div>
+        <div><label>Nr domu:<input type="number" min="1" name="building_number"></label></div>
+        <div><label>Nr mieszkania:<input type="number" min="1" name="flat_number"></label></div>
+        <label><input type="submit" value="Dodaj nowy adres"></label>
+        {% csrf_token %}
+    </form>
+{% endif %}
+</div>
+
+{% if phones %}
+    <fieldset style="width: 500px">
+    <legend><h4>Telefon</h4></legend>
+    {% for phone in phones %}
+        <form>
+        <p>{{ phone.phone_number }} - {{ phone.get_type_display }}</p>
+            <button formmethod="get" formaction="/delPhone/{{ phone.id }}">Usuń numer</button>
+        </form><br>
+    {% endfor %}
+    </fieldset>
+{% else %}
+    <div>Brak numerów telefonu</div>
+{% endif %}
+<br>
+<form method="post" action="/{{ person.id }}/addPhone">
+    <fieldset style="width: 500px;">
+        <legend>Dodaj nowy numer telefonu</legend>
+        <div><label>Numer telefonu:<input type="tel" name="phone_number"></label></div>
+        <label>domowy<input type="radio" name="type" value="1">
+        </label>
+        <label>prywatny<input type="radio" name="type" value="2">
+        </label>
+        <label>służbowy<input type="radio" name="type" value="3">
+        </label>
+        <label><input type="reset" value="Reset"></label>
+        <label><input type="submit" value="Dodaj"></label>
+    </fieldset>
+    {% csrf_token %}
+</form>
+
+{% if emails %}
+    <fieldset style="width: 500px">
+    <legend><h4>E-mail</h4></legend>
+    {% for email in emails %}
+        <p>{{ email.email_address }} - {{ email.get_type_display }}</p>
+        <form>
+            <button formmethod="get" formaction="/deleteEmail/{{ e_mail.id }}">Usuń adres</button>
+            <br></form>
+    {% endfor %}
+    </fieldset>
+{% else %}
+    <div>Brak adresów e-mail</div>
+{% endif %}
+<br>
+<form method="post" action="../{{ person.id }}/addEmail">
+    <fieldset style="width: 500px;">
+        <div><label>Adres e-mail:<input type="tel" name="email"></label></div>
+        <legend>Dodaj nowy adres e-mail</legend>
+        <label>prywatny<input type="radio" name="email_type" value="1">
+        </label>
+        <label>służbowy<input type="radio" name="email_type" value="2">
+        </label>
+        <label><input type="reset" value="Reset"></label>
+        <label><input type="submit" value="Dodaj"></label>
+    </fieldset>
+    {% csrf_token %}
+</form>
+<p>
+<form>
+    <button formmethod="get" formaction="/show/{{ person.id }}">Powrót do kontaktu</button>
+</form>
+</p>
+</body>
+</html>
